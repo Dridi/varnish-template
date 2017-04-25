@@ -1,0 +1,39 @@
+# Copyright (C) 2017  Dridi Boukelmoune
+
+$Module template 3 Varnish Template Module
+
+DESCRIPTION
+===========
+
+This module is part of the varnish-template repository, a project skeleton
+dedicated to means of extending Varnish:
+
+- Utility programs
+- VCL code
+- C modules
+
+It doesn't do anything useful besides serving as a template.
+
+Example
+    ::
+
+        import template;
+
+        include "varnish-template/common.vcl"
+
+        sub vcl_recv {
+            call notice_transaction;
+        }
+
+$Function VOID notice_me()
+
+Description
+    Do something that ``varnishtemplate``\(1) will notice.
+
+
+SEE ALSO
+========
+
+``vcl``\(7),
+``varnishd``\(1),
+``varnishtemplate``\(1)

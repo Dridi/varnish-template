@@ -1,0 +1,51 @@
+===============
+varnishtemplate
+===============
+
+------------------------------
+Varnish UTility (VUT) template
+------------------------------
+
+:Manual section: 1
+
+SYNOPSIS
+========
+
+.. include:: @builddir@/varnishtemplate_synopsis.rst
+varnishtemplate |synopsis|
+
+DESCRIPTION
+===========
+
+This program is part of the varnish-template repository, a project skeleton
+dedicated to means of extending Varnish:
+
+- Utility programs
+- VCL code
+- C modules
+
+It doesn't do anything useful besides serving as a template. It counts
+transactions making use of ``vmod_template``\(3) and displays that number
+before closing.
+
+The following options are available:
+
+.. include:: @builddir@/varnishtemplate_options.rst
+
+SIGNALS
+=======
+
+SIGUSR1
+    Flush any outstanding transactions
+
+SEE ALSO
+========
+
+``vcl``\(7),
+``varnishd``\(1),
+``vmod_template``\(3)
+
+COPYRIGHT
+=========
+
+Copyright (C) 2017  Dridi Boukelmoune
