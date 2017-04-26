@@ -24,7 +24,10 @@ Varnish maintains and supports integration with them (``varnishapi.pc``,
 Portability
 ===========
 
-TBD
+Successfully tested on:
+
+- Fedora 25 (x86_64)
+- FreeBSD 11.0 (amd64)
 
 Extending Varnish
 =================
@@ -203,3 +206,5 @@ This template is not perfect, it started as a one-hour hack:
   own project off this structure.
 
 - It's still lacking on the tutorial side.
+
+- It needs to be tested on more platforms.
