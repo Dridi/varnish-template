@@ -40,7 +40,7 @@ varnishtemplate_SOURCES = \
 # Test suite
 
 AM_TESTS_ENVIRONMENT = \
-	PATH="$(VARNISH_TEST_PATH):$(abs_builddir):$(PATH)" \
+	PATH="$(abs_builddir):$(VARNISH_TEST_PATH):$(PATH)" \
 	LD_LIBRARY_PATH="$(VARNISH_LIBRARY_PATH)"
 TEST_EXTENSIONS = .vtc
 VTC_LOG_COMPILER = varnishtest -v
