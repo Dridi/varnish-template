@@ -40,8 +40,9 @@ AC_ARG_WITH([rst2man],
 	[RST2MAN="$withval"],
 	AC_CHECK_PROGS(RST2MAN, [rst2man rst2man.py], []))
 
-VARNISH_PREREQ([5.1.2])
+VARNISH_PREREQ([5.2.0])
 VARNISH_VMODS([template])
+VARNISH_UTILITIES([varnishtemplate])
 
 AC_CONFIG_FILES([
 	Makefile

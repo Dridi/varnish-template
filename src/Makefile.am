@@ -60,17 +60,7 @@ dist_man_MANS = \
 	varnishtemplate.1 \
 	vmod_template.3
 
-varnishtemplate_synopsis.rst: varnishtemplate
-	$(AM_V_GEN) ./varnishtemplate --synopsis >$@
-
-varnishtemplate_options.rst: varnishtemplate
-	$(AM_V_GEN) ./varnishtemplate --options >$@
-
-varnishtemplate_rst_deps = \
-	varnishtemplate_synopsis.rst \
-	varnishtemplate_options.rst
-
-varnishtemplate.rst: $(varnishtemplate_rst_deps)
+@GENERATE_VARNISHTEMPLATE_DOCS@
 
 pdf-local: \
 	varnishtemplate.pdf \
@@ -83,5 +73,5 @@ pdf-local: \
 	$(AM_V_GEN) rst2pdf $< $@
 
 CLEANFILES = \
-	$(varnishtemplate_rst_deps) \
+	$(GENERATED_VARNISHTEMPLATE_DOCS) \
 	*.pdf

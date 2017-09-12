@@ -29,7 +29,7 @@ EXTRA_DIST = $(PACKAGE).spec
 
 RPMBUILD = CC= PKG_CONFIG_PATH= ACLOCAL_PATH= \
 	rpmbuild -D '_rpmdir rpmbuild' -D '_srcrpmdir rpmbuild/src'
-MOCK = mock -r varnish-51-epel-7-x86_64.cfg $(MOCK_OPTS) --resultdir mockbuild
+MOCK = mock -r varnish-52-epel-7-x86_64.cfg $(MOCK_OPTS) --resultdir mockbuild
 
 rpm: dist rpmbuild-clean
 	$(RPMBUILD) -ts $(PACKAGE)-$(VERSION).tar.gz
@@ -54,6 +54,3 @@ mockbuild-clean:
 clean-local: rpmbuild-clean mockbuild-clean
 
 .PHONY: rpmbuild-clean mockbuild-clean
-
-# XXX: not shipped yet by Varnish
-EXTRA_DIST += src/foreign

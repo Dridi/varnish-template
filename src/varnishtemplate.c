@@ -40,6 +40,7 @@
 #include <vre.h>
 #include <vut.h>
 
+static struct VUT *vut;
 static unsigned n_trans = 0;
 
 static void __attribute__((__noreturn__))
@@ -47,7 +48,7 @@ usage(int status)
 {
 	const char **opt;
 
-	fprintf(stderr, "Usage: %s <options>\n\n", VUT.progname);
+	fprintf(stderr, "Usage: %s <options>\n\n", vut->progname);
 	fprintf(stderr, "Options:\n");
 	for (opt = vopt_spec.vopt_usage; *opt != NULL; opt += 2)
 		fprintf(stderr, " %-25s %s\n", *opt, *(opt + 1));
@@ -96,12 +97,21 @@ dispatch(struct VSL_data *vsl, struct VSL_transaction * const *pt, void *priv)
 	return (0);
 }
 
+static void
+sighandler(int sig)
+{
+
+	if (vut != NULL)
+		VUT_Signaled(vut, sig);
+}
+
 int
 main(int argc, char * const *argv)
 {
 	int opt;
 
-	VUT_Init(*argv, argc, argv, &vopt_spec);
+	vut = VUT_InitProg(argc, argv, &vopt_spec);
+	AN(vut);
 
 	while ((opt = getopt(argc, argv, vopt_spec.vopt_optstring)) != -1) {
 		switch (opt) {
@@ -113,7 +123,7 @@ main(int argc, char * const *argv)
 			INCOMPL();
 			break;
 		default:
-			if (!VUT_Arg(opt, optarg))
+			if (!VUT_Arg(vut, opt, optarg))
 				usage(EXIT_FAILURE);
 		}
 	}
@@ -121,12 +131,14 @@ main(int argc, char * const *argv)
 	if (optind != argc)
 		usage(EXIT_FAILURE);
 
-	VUT.dispatch_f = dispatch;
-	VUT.dispatch_priv = NULL;
+	vut->dispatch_f = dispatch;
+	vut->dispatch_priv = NULL;
 
-	VUT_Setup();
-	(void)VUT_Main();
-	VUT_Fini();
+	VUT_Signal(sighandler);
+
+	VUT_Setup(vut);
+	(void)VUT_Main(vut);
+	VUT_Fini(&vut);
 
 	xxxassert(printf("%u\n", n_trans) > 0);
 	XXXAZ(fflush(stdout));
