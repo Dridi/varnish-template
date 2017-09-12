@@ -26,12 +26,17 @@ process p1 {
 	exec varnishtemplate -n ${v1_name}
 } -start
 
+# Don't start the first transaction too soon
+delay 1
+
 client c1 -repeat 3 {
 	txreq
 	rxresp
 } -run
 
+# Don't stop varnishtemplate too soon
 delay 1
+
 logexpect l1 -wait
 process p1 -stop
 
