@@ -23,34 +23,4 @@ SUBDIRS = src
 dist_doc_DATA = README.rst LICENSE
 dist_pkgvcl_DATA = vcl/$(PACKAGE)/common.vcl
 
-EXTRA_DIST = $(PACKAGE).spec
-
-# RPM packaging
-
-RPMBUILD = CC= PKG_CONFIG_PATH= ACLOCAL_PATH= \
-	rpmbuild -D '_rpmdir rpmbuild' -D '_srcrpmdir rpmbuild/src'
-MOCK = mock -r varnish-52-epel-7-x86_64.cfg $(MOCK_OPTS) --resultdir mockbuild
-
-rpm: dist rpmbuild-clean
-	$(RPMBUILD) -ts $(PACKAGE)-$(VERSION).tar.gz
-	$(RPMBUILD) --rebuild rpmbuild/src/$(PACKAGE)-$(VERSION)-*.src.rpm
-
-rpmlint: rpm
-	rpmlint $(PACKAGE).spec rpmbuild/*/$(PACKAGE)-*.rpm
-
-mockbuild: dist mockbuild-clean
-	$(MOCK) --buildsrpm --sources . --spec $(PACKAGE).spec
-	$(MOCK) --rebuild mockbuild/$(PACKAGE)-$(VERSION)-*.src.rpm
-
-mocklint: mockbuild
-	rpmlint $(PACKAGE).spec mockbuild/$(PACKAGE)-*.rpm
-
-rpmbuild-clean:
-	rm -rf rpmbuild/
-
-mockbuild-clean:
-	rm -rf mockbuild/
-
-clean-local: rpmbuild-clean mockbuild-clean
-
-.PHONY: rpmbuild-clean mockbuild-clean
+include varnish-rpm-build.am
