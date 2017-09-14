@@ -16,6 +16,11 @@
 
 AM_CFLAGS = $(VARNISHAPI_CFLAGS) -I$(srcdir)/foreign
 
+# Custom counters
+
+VSC_tpl.c VSC_tpl.h: tpl.vsc
+	$(PYTHON) $(VSCTOOL) -ch tpl.vsc
+
 # VMOD library
 
 vmod_LTLIBRARIES = libvmod_template.la
@@ -24,7 +29,9 @@ libvmod_template_la_LDFLAGS = $(VMOD_LDFLAGS)
 libvmod_template_la_SOURCES = vmod_template.c
 nodist_libvmod_template_la_SOURCES = \
 	vcc_template_if.c \
-	vcc_template_if.h
+	vcc_template_if.h \
+	VSC_tpl.c \
+	VSC_tpl.h
 
 @BUILD_VMOD_TEMPLATE@
 
@@ -59,6 +66,11 @@ dist_doc_DATA = \
 dist_man_MANS = \
 	varnishtemplate.1 \
 	vmod_template.3
+
+VSC_tpl.rst: tpl.vsc
+	$(PYTHON) $(VSCTOOL) -r tpl.vsc >VSC_tpl.rst
+
+vmod_template.3: VSC_tpl.rst
 
 @GENERATE_VARNISHTEMPLATE_DOCS@
 

@@ -1,6 +1,6 @@
 varnishtest "Notice two hit transactions"
 
-# One VTC to test the three extension mechanisms
+# One VTC to test the four extension mechanisms
 
 server s1 {
 	rxreq
@@ -15,11 +15,10 @@ varnish v1 -vcl+backend {
 	sub vcl_hit {
 		call notice_transaction;
 	}
-} -start
 
-logexpect l1 -v v1 {
-	expect 1004 * VCL_Log "varnish-template .* was here"
-	expect 1006 * VCL_Log "varnish-template .* was here"
+	sub vcl_backend_fetch {
+		call notice_transaction;
+	}
 } -start
 
 process p1 {
@@ -37,7 +36,6 @@ client c1 -repeat 3 {
 # Don't stop varnishtemplate too soon
 delay 1
 
-logexpect l1 -wait
 process p1 -stop
 
 shell {
@@ -47,7 +45,10 @@ shell {
 	varnishtemplate -n ${v1_name} -d >shell.out
 	diff -u shell.out ${p1_out}
 
-	# varnishtemplate should have noticed 2 transactions
+	# varnishtemplate should have noticed 3 transactions
 	n_trans=$(cat ${p1_out})
-	test "$n_trans" = 2
+	test "$n_trans" = 3
 }
+
+varnish v1 -expect TPL.client == 2
+varnish v1 -expect TPL.backend == 1

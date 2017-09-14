@@ -32,11 +32,12 @@ Successfully tested on:
 Extending Varnish
 =================
 
-There are mainly three ways to extend Varnish:
+There are mainly four ways to extend Varnish:
 
 1. Utility programs
 2. VCL code
 3. C modules
+4. Custom counters
 
 While this order may seem counter-intuitive, it is actually very accurate.
 Varnish ships itself with external programs, utilities that can add feature

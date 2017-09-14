@@ -23,6 +23,7 @@ dedicated to means of extending Varnish:
 - Utility programs
 - VCL code
 - C modules
+- Custom counters
 
 It doesn't do anything useful besides serving as a template. It counts
 transactions making use of ``vmod_template``\(3) and displays that number
