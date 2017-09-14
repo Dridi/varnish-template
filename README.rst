@@ -26,7 +26,7 @@ Portability
 
 Successfully tested on:
 
-- Fedora 25 (x86_64)
+- Fedora 26 (x86_64)
 - FreeBSD 11.0 (amd64)
 
 Extending Varnish
@@ -87,6 +87,15 @@ Because VCL is a domain-specific and safe language, it has a limited syntax
 and limited capabilities once you try to move outside of the domain (HTTP
 messages and caching). You can write VMODs (Varnish MODules) to interact
 deeper with Varnish, and possibly outside Varnish.
+
+Custom Counters
+---------------
+
+Since Varnish 5.2 it is possible to ship Varnish Shared Counters (VSC) via
+VMODs. These counters show up in tools like ``varnishstat`` and effectively
+allow to keep track of custom metrics alongside those already provided by
+Varnish. If you are already monitoring Varnish counters, then custom counters
+need no further integration.
 
 Build
 =====
@@ -187,17 +196,10 @@ Known limitations
 
 This template is not perfect, it started as a one-hour hack:
 
-- It requires at least Varnish 5.1.2, the latest release at the time of the
-  creation of this template. Some of the build system's goodies aren't
-  available on older releases. Once 4.1 is EOL, this will effectively become
-  the lowest common denominator because 5.0 was never supported in the first
-  place.
-
-- Headers from Varnish need to be copied in the repository, because they
-  aren't shipped yet with development packages. They can be found in
-  ``src/foreign``.
-
-  See also: https://github.com/varnishcache/varnish-cache/pull/2314
+- It requires at least Varnish 5.2.0, the latest release at the time these
+  lines were written. Some of the build system's goodies aren't available on
+  older releases, but with proper version checking it is possible to only
+  use what's supported.
 
 - Only RPM packaging is supported out of the box.
 
@@ -206,6 +208,6 @@ This template is not perfect, it started as a one-hour hack:
 - There is no branding script to automate a rename if you want to spin your
   own project off this structure.
 
-- It's still lacking on the tutorial side.
+- It's still lacking (around 0% completion) on the tutorial side.
 
 - It needs to be tested on more platforms.
