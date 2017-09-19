@@ -42,6 +42,7 @@ AC_ARG_WITH([rst2man],
 
 VARNISH_PREREQ([5.2.0])
 VARNISH_VMODS([template])
+VARNISH_COUNTERS([tpl])
 VARNISH_UTILITIES([varnishtemplate])
 
 AC_CONFIG_FILES([

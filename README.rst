@@ -97,6 +97,9 @@ allow to keep track of custom metrics alongside those already provided by
 Varnish. If you are already monitoring Varnish counters, then custom counters
 need no further integration.
 
+Counters defined by VMODs is still an experimental feature and is not expected
+to be stable.
+
 Build
 =====
 

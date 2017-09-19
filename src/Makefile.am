@@ -16,11 +16,6 @@
 
 AM_CFLAGS = $(VARNISHAPI_CFLAGS) -I$(srcdir)/foreign
 
-# Custom counters
-
-VSC_tpl.c VSC_tpl.h: tpl.vsc
-	$(PYTHON) $(VSCTOOL) -ch tpl.vsc
-
 # VMOD library
 
 vmod_LTLIBRARIES = libvmod_template.la
@@ -33,6 +28,7 @@ nodist_libvmod_template_la_SOURCES = \
 	VSC_tpl.c \
 	VSC_tpl.h
 
+@BUILD_VSC_TPL@
 @BUILD_VMOD_TEMPLATE@
 
 # VUT program
@@ -61,14 +57,12 @@ TESTS = tests/template.vtc
 
 dist_doc_DATA = \
 	vmod_template.vcc \
+	tpl.vsc \
 	$(TESTS)
 
 dist_man_MANS = \
 	varnishtemplate.1 \
 	vmod_template.3
-
-VSC_tpl.rst: tpl.vsc
-	$(PYTHON) $(VSCTOOL) -r tpl.vsc >VSC_tpl.rst
 
 vmod_template.3: VSC_tpl.rst
 
@@ -84,6 +78,4 @@ pdf-local: \
 .rst.pdf:
 	$(AM_V_GEN) rst2pdf $< $@
 
-CLEANFILES = \
-	$(GENERATED_VARNISHTEMPLATE_DOCS) \
-	*.pdf
+CLEANFILES = *.pdf
