@@ -21,8 +21,9 @@
 #include "config.h"
 
 #include <cache/cache.h>
-#include <vcl.h>
+#include <vdef.h>
 #include <vrt.h>
+#include <vcl.h>
 
 #include "vcc_template_if.h"
 #include "VSC_tpl.h"
