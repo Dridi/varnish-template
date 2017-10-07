@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AM_CFLAGS = $(VARNISHAPI_CFLAGS) -I$(srcdir)/foreign
+AM_CFLAGS = $(VARNISHAPI_CFLAGS)
 
 # VMOD library
 
