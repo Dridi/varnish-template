@@ -22,14 +22,13 @@
 
 #include <cache/cache.h>
 #include <vdef.h>
-#include <vrt.h>
 #include <vcl.h>
 
 #include "vcc_template_if.h"
-#include "VSC_tpl.h"
+#include "VSC_template.h"
 
 static pthread_mutex_t mtx;
-static struct VSC_tpl *vsc_tpl;
+static struct VSC_template *vsc_template;
 
 int __match_proto__(vmod_event_f)
 event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e evt)
@@ -41,14 +40,14 @@ event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e evt)
 	switch (evt) {
 	case VCL_EVENT_LOAD:
 		AZ(pthread_mutex_init(&mtx, NULL));
-		AZ(vsc_tpl);
-		vsc_tpl = VSC_tpl_New("");
-		AN(vsc_tpl);
+		AZ(vsc_template);
+		vsc_template = VSC_template_New("");
+		AN(vsc_template);
 		break;
 	case VCL_EVENT_DISCARD:
 		AZ(pthread_mutex_destroy(&mtx));
-		AN(vsc_tpl);
-		VSC_tpl_Destroy(&vsc_tpl);
+		AN(vsc_template);
+		VSC_template_Destroy(&vsc_template);
 		break;
 	default:
 		break;
@@ -66,8 +65,8 @@ vmod_notice_me(VRT_CTX)
 	VSLb(ctx->vsl, SLT_VCL_Log, PACKAGE_STRING " was here!");
 	AZ(pthread_mutex_lock(&mtx));
 	if (ctx->http_req != NULL)
-		vsc_tpl->client++;
+		vsc_template->client++;
 	if (ctx->http_bereq != NULL)
-		vsc_tpl->backend++;
+		vsc_template->backend++;
 	AZ(pthread_mutex_unlock(&mtx));
 }
