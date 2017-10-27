@@ -50,5 +50,5 @@ shell {
 	test "$n_trans" = 3
 }
 
-varnish v1 -expect TPL.client == 2
-varnish v1 -expect TPL.backend == 1
+varnish v1 -expect TEMPLATE.client == 2
+varnish v1 -expect TEMPLATE.backend == 1

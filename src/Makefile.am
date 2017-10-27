@@ -25,10 +25,10 @@ libvmod_template_la_SOURCES = vmod_template.c
 nodist_libvmod_template_la_SOURCES = \
 	vcc_template_if.c \
 	vcc_template_if.h \
-	VSC_tpl.c \
-	VSC_tpl.h
+	VSC_template.c \
+	VSC_template.h
 
-@BUILD_VSC_TPL@
+@BUILD_VSC_TEMPLATE@
 @BUILD_VMOD_TEMPLATE@
 
 # VUT program
@@ -57,14 +57,14 @@ TESTS = tests/template.vtc
 
 dist_doc_DATA = \
 	vmod_template.vcc \
-	tpl.vsc \
+	template.vsc \
 	$(TESTS)
 
 dist_man_MANS = \
 	varnishtemplate.1 \
 	vmod_template.3
 
-vmod_template.3: VSC_tpl.rst
+vmod_template.3: VSC_template.rst
 
 @GENERATE_VARNISHTEMPLATE_DOCS@
 
