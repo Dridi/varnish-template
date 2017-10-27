@@ -22,7 +22,6 @@
 
 #include <cache/cache.h>
 #include <vdef.h>
-#include <vrt.h>
 #include <vcl.h>
 
 #include "vcc_template_if.h"
